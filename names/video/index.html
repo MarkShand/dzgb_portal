@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Videos</title>
+	</head>
+	<body>
+		<video id="VideoID" width="720" autoplay>
+			<source src="videos/What if S1E3.MP4" type="video/mp4">
+		</video>
+		<button onclick="playVid()">Play</button>
+		<button onclick="pauseVid()">Pause</button>
+	</body>
+	<script type="text/javascript">
+		var vid = document.getElementById("VideoID"); 
+		function playVid() { 
+		  vid.play();
+		}
+		function pauseVid() { 
+		  vid.pause();
+		}
+	</script>
+</html>
