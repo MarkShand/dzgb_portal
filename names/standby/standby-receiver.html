@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta charset="utf-8">
+		<title>Standby Receiver</title>
+		<link rel="stylesheet" href="css/darkly.css">
+		<link rel="stylesheet" href="css/icons/bootstrap-icons.css">
+	</head>
+	<style>
+		body{
+			overflow:auto;
+		}
+		.name, #show-name{
+			text-transform: uppercase;
+			font-size: 5vw;
+			font-family: "arial";
+		}
+		.show{
+			position: relative;
+			animation-name: show-txt;
+			animation-fill-mode: forwards;
+			animation-duration: 1s;
+			background-color: gray;
+			animation-timing-function: ease-in-out;
+		}
+		.hide{
+			background-color: gray;
+			position: relative;
+			animation-name: hide-txt;
+			animation-fill-mode: forwards;
+			animation-duration: 1s;
+			animation-timing-function: ease-in-out;
+		}
+		@keyframes show-txt {
+			from {
+				left: -100%;
+			}
+  		 	to {
+				left: 0%;
+			}
+		}
+		@keyframes hide-txt {
+			from {
+				left: 0%;
+			}
+  		 	to {
+				left: -100%;
+		 }
+		}
+
+	</style>
+	<body>
+		<div class="container">
+			<div class="row mt-3" id="items">
+				<!-- <div class="col-md-12 mt-1 mb-2">
+					<div class="card btn btn-light" data-key="">
+						<div class="d-flex justify-content-between">
+							<div class="align-self-center" style="padding-left:3vw;">
+								<div class="name">Anj Galero</div>
+							</div>
+							<div class="p-0 align-self-center">
+								<button class="btn btn-outline-primary d-flex" style="height:auto !important;">
+									<i class="bi bi-x-lg align-self-center" style="font-size:4vw;"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div> -->
+			</div>
+		</div>
+		<!-- <div style="height:100vh;" >
+			<div id="main" style="height:100%;" class="hide">
+				<div class="d-flex justify-content-center align-content-between flex-wrap" style="height:100%;">
+					<div class="p-1 align-self-center">
+						<div id="show-name"></div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+	</body>
+	<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script type="text/javascript">
+
+
+		$(document).ready(function(){
+			reset = new BroadcastChannel('reset');
+			reset.onmessage = function(ev){
+				$("#items").load(location.href + " #items");
+			}
+			// RECEIVE NAME
+			rx = new BroadcastChannel('standby-channel');
+			rx.onmessage =  function(ev){
+				rx_data = ev.data.split('|');
+				var name = rx_data[0];
+				var rand = rx_data[1];
+				var visibility = $('#main').attr('class');
+
+				name_nospace = name.replace(/\s+/g, '');
+				$('#items').fadeIn(function(){
+					$(this).append(
+						'<div class="col-md-12 mb-2" id="'+name_nospace+''+rand+'">' +
+							'<div class="card btn btn-light">' +
+								'<div class="d-flex justify-content-between">' +
+									'<div class="align-self-center" style="padding-left:3vw;">' +
+										'<div class="name">'+ name +'</div>' +
+									'</div>' +
+									'<div class="p-0 align-self-center">' +
+										'<button class="btn btn-outline-primary d-flex" id="remove-item" data-key="'+name_nospace+''+rand+'" style="height:auto !important;">' +
+											'<i class="bi bi-x-lg align-self-center" style="font-size:4vw;"></i>' +
+										'</button>' +
+									'</div>' +
+								'</div>' +
+							'</div>' +
+						'</div>'
+						), 500
+				});
+
+				$('button#remove-item').on('click', function(){
+					channel = $(this).attr('data-key');
+					tx = new BroadcastChannel('remove-channel');
+					tx.postMessage(channel);
+				});
+
+				rx_del = new BroadcastChannel('remove-channel');
+				rx_del.onmessage =  function(ev){
+					rx_del_data = ev.data.split('|');
+					item = rx_del_data[0];
+					$('#' + item).remove();
+				}
+
+				// if (name == 'hide') {
+				// 	if (visibility == 'show') {
+				// 		$('#main').removeClass('show').addClass('hide');
+				// 	}
+				// }else {
+				// 	if (visibility == 'show') {
+				// 		$('#main').removeClass('show').addClass('hide');
+				// 		setTimeout(function() {
+				// 			$('#show-name').html(name);
+				// 			$('#main').removeClass('hide').addClass('show');
+				// 		}, 1000);
+				// 	}else {
+				// 		$('#show-name').html(name);
+				// 		$('#main').removeClass('hide').addClass('show');
+				// 	}
+				// }
+			}
+		});
+	</script>
+</html>

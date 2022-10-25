@@ -1,0 +1,220 @@
+:root {
+  --main-color: #fff;
+  --element-radius: 1em;
+  --obs-background: #181819;
+  --obs-button-background: #162458;
+  --obs-button-border: #233166;
+  --obs-button-hover-background: #581624;
+  --obs-button-hover-border: #84162d;
+  --obs-button-color: #fff
+}
+
+@import "normalize.css";
+@import "../fonts/RobotoCondensed/font.css";
+
+*:focus {outline:none !important}
+
+
+
+/*CLOCK*/
+body.browser-source.clock{
+	margin:0;
+	font: bold 6vw 'Roboto Condensed', sans-serif;
+	color: var(--main-color);
+	text-align:right;
+}
+
+#div-clock {
+    padding: .2em .5em;
+    background: rgba(0,0,0,.2);
+    display: inline-block;
+    line-height: 1;
+	border-radius: var(--element-radius);
+}
+
+/*OBS*/
+.panel {
+	background: var(--obs-background);
+	color: var(--main-color);
+	font:normal 14px -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	max-width:100em;
+	margin:1em;
+	}
+	
+.panel input#lower-thirds-name, .panel input#lower-thirds-function, .panel input#lower-thirds-img, .panel input#search-name{
+	box-sizing: border-box;
+	padding:.75em;
+	margin:0 0 1em;
+	border:none;
+	display:block;
+	width:100%;
+}
+	
+.panel button{
+	background: var(--obs-button-background);
+	border: 1px solid var(--obs-button-border);
+	color: var(--obs-button-color);
+	padding:.75em;
+	margin:0 0 1em;
+	text-align:center;
+	width:100%;
+}
+
+.panel button.onethird{
+	width:31.33333333%;
+	float:left;
+	margin-right:2%;
+	height: 40px;
+}
+
+.panel button.onehalf{
+	width:47%;
+	float:left;
+	margin-right:2%;
+	height: 40px;
+}
+
+.panel button:hover{
+	background: var(--obs-button-hover-background);
+	border-color: var(--obs-button-hover-border);
+}
+
+.panel .radio-position{float: right;text-align:center}
+
+.panel .radio-position input{
+	width: 2em;
+	height:2em;
+	display:inline-block
+}
+
+.panel .radio-position input:checked{
+	background:red
+}
+	
+.panel ul#predefined {
+    list-style: none;
+    padding: 0;
+}
+
+.panel ul#predefined li .name, ul#predefined li .function {
+    display: inline-block;
+}	
+
+.panel ul#predefined li {
+    padding: .5em 1em;
+    border: 1px solid #555;
+    margin: 0 0 .25em;
+    text-align: left;
+    cursor: pointer;
+}
+
+.panel ul#predefined li .function:before{ content: "\00a0(";}
+.panel ul#predefined li .function:after{ content: ")";}
+
+
+		body.browser-source.lower-thirds{
+		margin:0 2em;
+		position:relative;
+		overflow:hidden
+		}
+		
+		
+		#lower-third, #lower-third.left, #lower-third.right{
+		position:absolute;
+		display:inline-block;
+		transition: all .5s;
+		}
+		
+		
+		#lower-third.left{left:0}
+		#lower-third.right{right:0}
+		
+		#lower-third .left-block, #lower-third .right-block{
+		display:inline-block
+		height:auto;
+		}
+		
+		#lower-third .left-block{
+		border-right:1px solid #333;
+		padding-right:.5em;
+		margin-right:.5em
+		}
+		
+		#lower-third .left-block img{
+		height:7em
+		}
+		
+	
+		body.browser-source.lower-thirds #lower-third #name {
+		font: bold 3vw 'Arial', sans-serif;
+		color: #fff;
+		left: 0;
+		top: 0;
+		text-transform: uppercase;
+		margin-top: 10px;
+		}
+		
+		body.browser-source.lower-thirds #lower-third #function {
+		font: bold 2vw 'Arial', sans-serif;
+		color: #fff;
+		line-height:1.5;
+		top: 2.5em;
+		text-transform: uppercase;
+		margin-bottom: 10px;
+		}
+
+@keyframes AnimateInLeft {
+  from {
+    left: -180vw;
+  }
+
+  to {
+    left: 0;
+  }
+}
+
+#lower-third.animateIn.left{
+	animation-name: AnimateInLeft;
+	animation-duration: 3s;
+	animation-timing-function: ease;
+}
+
+#lower-third.animateOut.left{
+	left: -190vw;
+	transition-timing-function: ease;
+}
+
+#lower-third.animateIn.right{
+	right: 0;
+	transition-timing-function: ease;
+}
+
+#lower-third.animateOut.right{
+	transition-timing-function: ease;
+	right: -190vw;
+}
+
+    	.container {
+		  	text-align: left;
+		}
+		.ccontent{
+
+		}
+		#name {
+			padding-top: 5px;
+    		padding-left: 30px;
+		  	background-color: #fff;
+		  	border-top-right-radius: 100px;
+		}
+    	#function {
+    		padding-top: 5px;
+    		padding-left: 30px;
+    		padding-bottom: 5px;
+		  	background-color: #1D34B8;
+		  	border-top-right-radius: 100px;
+		}
+		.image {
+		  	object-fit: cover;
+		  	width: 700px;
+  			height: 820px;
+		}

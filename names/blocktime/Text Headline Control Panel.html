@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  	<head>
+	    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	    <title>Headline Sender</title>
+		<link rel="stylesheet" href="../common/css/flatly-bootstrap.min.css">
+  	</head>
+<style type="text/css">
+  	.img{
+  		display: none;
+  	}
+</style>
+<body class="container" style="zoom: 0.7;">
+	<div class="row mt-2">
+	<h4>TEXT HEADLINE</h4>
+		<div class="col-6">
+			<input class="form-control" id="search-name" placeholder="Search Headline" title="Search Headline" onkeyup="SearchFilter()">
+		</div>
+		<div class="col-6">
+			<div class="btn-group">
+				<button class="btn btn-outline-warning" onclick="send_data('animateIn','headline');">Show</button>
+				<button class="btn btn-outline-info" onclick="send_data('animateOut','headline');">Hide</button>
+				<button  class="btn btn-outline-primary" onclick="location.reload()">Refresh</button>	
+			</div>
+		</div>
+	</div>
+	<div class="row mt-3">
+		<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+		  	<input type="radio" class="btn-check" name="headline" id="headline1" autocomplete="off">
+		  	<label class="btn btn-outline-primary" for="headline1">Headline 1</label>
+		  	<input type="radio" class="btn-check" name="headline" id="headline2" autocomplete="off">
+		  	<label class="btn btn-outline-primary" for="headline2">Headline 2</label>
+		  	<input type="radio" class="btn-check" name="headline" id="headline3" autocomplete="off">
+		  	<label class="btn btn-outline-primary" for="headline3">Headline 3</label>
+		  	<input type="radio" class="btn-check" name="headline" id="headline4" autocomplete="off">
+		  	<label class="btn btn-outline-primary" for="headline4">Anchor 4</label>
+		</div>
+	  	<div class="radio-position" style="display: none; ">
+            <input type="radio" name="radio-group-position" id="position-left" checked="checked"/><label for="position-left">Left</label>
+            <input type="radio" name="radio-group-position" id="position-right" /><label for="position-right">Right</label>
+       </div>
+	</div>
+	<div class="row mt-4">
+		<h4>Headline List</h4>
+		<ul id="predefined" class="list-group"></ul>
+	</div>
+	<div class="row" style="display:none;">
+		<form>
+			<div class="label">Output:</div>
+			<input  type="text" class="form-control" disabled id="lower-thirds-name" placeholder="Name and surname">		
+			<input disabled class="form-control" id="lower-thirds-function" placeholder="Description, Location">
+		</form>
+	</div>
+  </body>
+<script type="text/javascript" src="../common/js/script.js"></script>
+<script type="text/javascript" src="../common/js/text headline.js"></script>
+<script src="../common/js/jquery.js"></script>
+<script type="text/javascript">select_data(); Active();</script>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta charset="utf-8">
+		<title>Standby Receiver</title>
+		<link rel="stylesheet" href="css/flatly.css">
+		<link rel="stylesheet" href="css/icons/bootstrap-icons.css">
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	</head>
+	<style>
+		body{
+			overflow:auto;
+		}
+		.name, #show-name{
+			text-transform: uppercase;
+			font-size: 9vw;
+			font-family: "impact";
+			text-align: left;
+		}
+		</style>
+	<body>
+		<div class="container">
+			<div class="row mt-3">
+				<div class="col-md-12 mb-2">
+					<div class="card bg-danger btn btn-warning">
+						<div class="d-flex justify-content-between">
+							<div class="align-self-center" style="padding-left:3vw;">
+								<div class="name" style="font-family:'arial black';">DZGB STANDBY</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mt-2" id="items"></div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+
+			// RESET IF PANEL RESETS
+			reset = new BroadcastChannel('reset');
+			reset.onmessage = function(ev){
+				$("#items").html('');
+			}
+			// RESET PANEL ON REFRESH
+			reset_panel = new BroadcastChannel('reset-panel');
+			reset_panel.postMessage(1);
+
+			// REMOVE SPECIFIC ITEM IF REMOVED IN PANEL
+			rx_del = new BroadcastChannel('remove-channel');
+			rx_del.onmessage = function(ev){
+				rx_del_data = ev.data.split('|');
+				item = rx_del_data[0];
+				rx_del = new BroadcastChannel('remove-channel');
+				$('#' + item).remove();
+			}
+			// UPDATE LIST
+			rx_update_list = new BroadcastChannel('update-list');
+			rx_update_list.onmessage = function(ev){
+				rx_list = ev.data.split('|');
+				rx_list_names = rx_list[0];
+				rx_list_ids = rx_list[1];
+
+				arr_names = rx_list_names.split(',');
+				arr_id = rx_list_ids.split(',');
+				if (arr_id[0] == '') {
+					$('#items').html('');
+				}else {
+					$('#items').html('');
+					for (var i = 0; i < arr_id.length; i++) {
+						remainder = i % 2;
+						if (remainder == 1) {
+							bg = 'bg-light';
+							btn_bg = 'btn-light'
+						}else {
+							bg = 'bg-primary';
+							btn_bg = 'btn-primary'
+						}
+						num = i+1;
+						$('#items').append(
+							'<div class="col-md-12 mb-2" id="'+arr_id[i]+'">' +
+							'<div class="card '+ bg +' btn '+ btn_bg +'">' +
+							'<div class="d-flex justify-content-between">' +
+							'<div class="align-self-center" style="padding-left:3vw;">' +
+							'<div class="name">'+num+'. '+ arr_names[i] +'</div>' +
+							'</div>' +
+							'</div>' +
+							'</div>' +
+							'</div>'
+						);
+					}
+				}
+			}
+
+			// RECEIVE NAME
+			rx = new BroadcastChannel('standby-channel');
+			rx.onmessage =  function(ev){
+				rx_data = ev.data.split('|');
+				var name = rx_data[0];
+				var rand = rx_data[1];
+
+				name_nospace = name.replace(/\s+/g, '');
+				$('div#items').append(
+					'<div class="col-md-12 mb-2" id="'+name_nospace+''+rand+'">' +
+						'<div class="card bg-light btn btn-light">' +
+							'<div class="d-flex justify-content-between">' +
+								'<div class="align-self-center" style="padding-left:3vw;">' +
+									'<div class="name">'+ name +'</div>' +
+								'</div>' +
+							'</div>' +
+						'</div>' +
+					'</div>'
+				).children().each(function(index){
+					length = $('div#items').children().last().index();
+					rem = index % 2;
+					num = index + 1;
+					if (index == length) {
+						$(this).children().children().children().children().prepend(num + '. ');
+					}
+					if (rem == 0) {
+						$(this).children().addClass('bg-primary').addClass('btn-primary').removeClass('bg-light').removeClass('btn-light');
+					}
+				});
+			}
+		});
+	</script>
+</html>
