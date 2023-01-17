@@ -16,7 +16,7 @@ if (isset($_POST['concern'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Concerns</title>
+  <title>DZGB Chatbox</title>
   <link rel="stylesheet" href="../css/flatly.css" crossorigin="anonymous">
 </head>
 <style >
@@ -60,13 +60,14 @@ if (isset($_POST['concern'])) {
 <body>
   <div class="container">
     <h3 class="mt-4">
-      Facebook Concerns Lists
+      DZGB Chatbox
     </h3>
     <div class="list-group mt-4">
       <?php
       include('conn.php');
       $sql = "SELECT * FROM `tbl_concerns` WHERE `resolved` = '0'";
       $query = mysqli_query($conn, $sql);
+      
       $active = '';
       $num = 0;
       while ($row = mysqli_fetch_array($query)) {
